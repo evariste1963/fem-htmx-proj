@@ -13,12 +13,13 @@
       integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
       crossorigin="anonymous"
     ></script>
-    <title>Document</title>
+    <title>Primeagen_HTMX-GO</title>
   </head>
   <body>
     Count: {{ .Count }}
 
-    <button hx-post="/count">Count</button>
+    <!--  button makes POST request to "/count" endpoint on the server (in this instance main.go is the server) -->
+    <button hx-post="/counter">Count</button>
   </body>
 </html>
 

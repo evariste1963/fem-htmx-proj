@@ -26,13 +26,6 @@ type Count struct {
 	Count int
 }
 
-// type Blocks struct {
-//     Start int
-//     Next int
-//     More bool
-//     Blocks []Block
-// }
-
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
@@ -44,7 +37,7 @@ func main() {
 		return c.Render(200, "index", count)
 	})
 
-	e.POST("/count", func(c echo.Context) error {
+	e.POST("/counter", func(c echo.Context) error {
 		count.Count++
 		return c.Render(200, "index", count)
 	})
