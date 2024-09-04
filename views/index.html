@@ -16,11 +16,9 @@
     <title>Primeagen_HTMX-GO</title>
   </head>
   <body>
-    Count: {{ .Count }}
-
+    <div id="count"> {{ template "counter" . }} </div>
     <!--  button makes POST request to "/count" endpoint on the server (in this instance main.go is the server) -->
-    <button hx-post="/counter">Count</button>
+    <button hx-target="#count" hx-post="/count">Count</button>
   </body>
 </html>
-
-{{ end }}
+{{ end }} {{ block "counter" . }} Count: {{ .Count }} {{end}}
