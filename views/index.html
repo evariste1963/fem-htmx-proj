@@ -16,9 +16,54 @@
     <title>Primeagen_HTMX-GO</title>
   </head>
   <body>
-    <div id="count"> {{ template "counter" . }} </div>
-    <!--  button makes POST request to "/count" endpoint on the server (in this instance main.go is the server) -->
-    <button hx-target="#count" hx-post="/count">Count</button>
+    {{ template "form" .Form }}
+    <hr />
+    {{ template "display" .Data}}
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        document.body.addEventListener("htmx:beforeSwap", function (evt) {
+          if (evt.detail.xhr.status === 422) {
+            evt.detail.shouldSwap = true;
+            evt.detail.isError = false;
+          }
+        });
+      });
+    </script>
   </body>
 </html>
-{{ end }} {{ block "counter" . }} Count: {{ .Count }} {{end}}
+{{ end }} {{ block "form" . }}
+<form hx-swap="outerHTML" hx-post="/contacts">
+  name:
+  <input
+    {{
+    if
+    .Values.name
+    }}
+    value="{{ .Values.name }}"
+    {{end}}
+    type="text"
+    name="name"
+  />
+  email:
+  <input
+    {{
+    if
+    .Values.email
+    }}
+    value="{{ .Values.email }}"
+    {{end}}type="text"
+    name="email"
+  />
+  {{if .Errors.email }}
+  <div style="color: red">{{ .Errors.email }}</div>
+  {{ end }}
+  <button class="submit">Create Contact</button>
+</form>
+{{ end }} {{ block "display" . }}
+<div id="contacts" style="display: flex; flex-direction: column">
+  {{ range .Contacts }}
+  <div>Name: <span>{{ .Name }}</span> Email: <span>{{ .Email }}</span></div>
+  {{ end }}
+</div>
+{{ end }}
