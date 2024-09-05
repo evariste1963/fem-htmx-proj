@@ -32,31 +32,33 @@
     </script>
   </body>
 </html>
-{{ end }} {{ block "form" . }}
-<form hx-swap="outerHTML" hx-post="/contacts">
-  name:
-  <input
-    {{ if .Values.name }}
-       value="{{ .Values.name }}"
-    {{end}}
-    type="text"
-    name="name"
-  />
-  email:
-  <input
-    {{ if .Values.email }}
-      value = "{{ .Values.email }}"
-    {{end}}
-    type = "text"
-    name = "email"
-  />
+{{ end }}
 
-  {{if .Errors.email }}
-    <div style="color: red">
-      {{ .Errors.email }}
-    </div>
-  {{ end }}
-  <button class="submit">Create Contact</button>
+{{ block "form" . }}
+  <form hx-swap="outerHTML" hx-post="/contacts">
+    name:
+    <input
+      {{ if .Values.name }}
+        value="{{ .Values.name }}"
+      {{end}}
+      type="text"
+      name="name"
+    />
+    email:
+    <input
+      {{ if .Values.email }}
+        value = "{{ .Values.email }}"
+      {{end}}
+      type = "text"
+      name = "email"
+    />
+
+    {{if .Errors.email }}
+      <div style="color: red">
+        {{ .Errors.email }}
+      </div>
+    {{ end }}
+    <button class="submit">Create Contact</button>
 </form>
 {{ end }} 
 
