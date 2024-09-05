@@ -21,7 +21,7 @@
     {{ template "display" .Data}}
 
     <script>
-      document.addEventListener("DOMContentLoaded", (event) => {
+      document.addEventListener("DOMContentLoaded", event => {
         document.body.addEventListener("htmx:beforeSwap", function (evt) {
           if (evt.detail.xhr.status === 422) {
             evt.detail.shouldSwap = true;
@@ -36,34 +36,37 @@
 <form hx-swap="outerHTML" hx-post="/contacts">
   name:
   <input
-    {{
-    if
-    .Values.name
-    }}
-    value="{{ .Values.name }}"
+    {{ if .Values.name }}
+       value="{{ .Values.name }}"
     {{end}}
     type="text"
     name="name"
   />
   email:
   <input
-    {{
-    if
-    .Values.email
-    }}
-    value="{{ .Values.email }}"
-    {{end}}type="text"
-    name="email"
+    {{ if .Values.email }}
+      value = "{{ .Values.email }}"
+    {{end}}
+    type = "text"
+    name = "email"
   />
+
   {{if .Errors.email }}
-  <div style="color: red">{{ .Errors.email }}</div>
+    <div style="color: red">
+      {{ .Errors.email }}
+    </div>
   {{ end }}
   <button class="submit">Create Contact</button>
 </form>
-{{ end }} {{ block "display" . }}
-<div id="contacts" style="display: flex; flex-direction: column">
-  {{ range .Contacts }}
-  <div>Name: <span>{{ .Name }}</span> Email: <span>{{ .Email }}</span></div>
-  {{ end }}
+{{ end }} 
+
+{{ block "display" . }}
+  <div id="contacts" style="display: flex; flex-direction: column">
+    {{ range .Contacts }}
+      <div> 
+        Name: <span>{{ .Name }}</span> 
+        Email: <span>{{ .Email }}</span> 
+      </div>
+    {{ end }}
 </div>
 {{ end }}
