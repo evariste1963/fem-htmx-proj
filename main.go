@@ -132,7 +132,7 @@ func main() {
 	})
 
 	e.DELETE("/contacts/:id", func(c echo.Context) error {
-		time.Sleep(3 * time.Second)
+		time.Sleep(1 * time.Second)
 		idStr := c.Param("id")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
